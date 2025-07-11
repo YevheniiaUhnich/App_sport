@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Щоденник Спортсмена</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <h1 class="title">Щоденник Спортсмена</h1>
+        <div class="date-display" id="currentDate"></div>
+      </header>
+
+      <main class="main">
+        <section class="running-section">
+          <h2 class="section-title">🏃‍♂️ Біг</h2>
+          <div class="exercise-card running-card">
+            <div class="exercise-info">
+              <span class="exercise-name">Ранкова пробіжка</span>
+              <input type="text" class="time-input" id="runningTime" placeholder="Час (хв)" />
+            </div>
+            <div class="exercise-actions">
+              <button class="btn-complete" onclick="completeRunning()">✓</button>
+            </div>
+          </div>
+          
+          <!-- Running Chart -->
+          <div class="running-chart-container">
+            <h3 class="chart-title">📈 Графік бігу за тиждень</h3>
+            <div class="chart-wrapper">
+              <canvas id="runningChart" width="400" height="200"></canvas>
+            </div>
+            <div class="chart-legend">
+              <span class="legend-item">
+                <span class="legend-color primary"></span>
+                Хвилини бігу
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section class="exercises-section">
+          <div class="section-header">
+            <h2 class="section-title">💪 Вправи</h2>
+            <button class="btn-add" onclick="showAddForm()">+ Додати вправу</button>
+          </div>
+
+          <div class="add-exercise-form" id="addForm">
+            <div class="form-group">
+              <input type="text" id="exerciseName" placeholder="Назва вправи" />
+              <div class="form-row">
+                <input type="number" id="exerciseReps" placeholder="Кількість разів" min="1" />
+                <input type="number" id="exerciseSets" placeholder="Кількість серій" min="1" />
+                <input type="number" id="exerciseTime" placeholder="Час (хв)" min="1" />
+              </div>
+              <div class="form-actions">
+                <button class="btn-save" onclick="addExercise()">Зберегти</button>
+                <button class="btn-cancel" onclick="hideAddForm()">Скасувати</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="exercises-list" id="exercisesList">
+            <!-- Exercises will be dynamically added here -->
+          </div>
+        </section>
+
+        <section class="stats-section">
+          <h2 class="section-title">📊 Статистика дня</h2>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-label">Всього вправ</span>
+              <span class="stat-value" id="totalExercises">0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Загальний час</span>
+              <span class="stat-value" id="totalTime">0 хв</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Всього повторень</span>
+              <span class="stat-value" id="totalReps">0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Всього серій</span>
+              <span class="stat-value" id="totalSets">0</span>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,607 @@
+// Variables
+$primary-color: #00ffff;
+$secondary-color: #0080ff;
+$accent-color: #ff0080;
+$bg-dark: #0a0a0a;
+$bg-card: #1a1a1a;
+$text-light: #ffffff;
+$text-muted: #888888;
+$success: #00ff88;
+$danger: #ff4444;
+
+// Mixins
+@mixin neon-glow($color: $primary-color) {
+  box-shadow: 0 0 10px $color, 0 0 20px $color, 0 0 30px $color;
+}
+
+@mixin neon-text($color: $primary-color) {
+  color: $color;
+  text-shadow: 0 0 5px $color, 0 0 10px $color, 0 0 15px $color;
+}
+
+@mixin gradient-bg($color1: $primary-color, $color2: $secondary-color) {
+  background: linear-gradient(135deg, $color1, $color2);
+}
+
+// Reset and base styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $bg-dark;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 128, 255, 0.1) 0%, transparent 50%);
+  color: $text-light;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+// Header styles
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  
+  .title {
+    color: $primary-color;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+  
+  .date-display {
+    color: $secondary-color;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+}
+
+// Section styles
+.section-title {
+  color: $primary-color;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+}
+
+// Running section
+.running-section {
+  margin-bottom: 40px;
+  
+  .running-card {
+    @include gradient-bg();
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+}
+
+// Running Chart
+.running-chart-container {
+  background: $bg-card;
+  border: 2px solid rgba($primary-color, 0.3);
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+  
+  .chart-title {
+    color: $primary-color;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .chart-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  
+  #runningChart {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: $text-muted;
+    }
+    
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      
+      &.primary {
+        background: $primary-color;
+      }
+    }
+  }
+}
+
+// Exercise card styles
+.exercise-card {
+  background: $bg-card;
+  border: 2px solid rgba($primary-color, 0.3);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: $primary-color;
+    transform: translateY(-2px);
+  }
+  
+  .exercise-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+    
+    .exercise-main {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    .exercise-name {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: $text-light;
+      
+      &.completed {
+        text-decoration: line-through;
+        color: $success;
+      }
+    }
+    
+    .exercise-details {
+      font-size: 0.9rem;
+      color: $primary-color;
+      font-weight: 400;
+    }
+    
+    .exercise-date {
+      font-size: 0.85rem;
+      color: $text-muted;
+      font-weight: 400;
+    }
+    
+    .time-input {
+      background: transparent;
+      border: 2px solid rgba($secondary-color, 0.5);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: $primary-color;
+      font-size: 0.9rem;
+      width: 100px;
+      transition: all 0.3s ease;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+      
+      &::placeholder {
+        color: $text-muted;
+      }
+    }
+  }
+  
+  .exercise-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  &.completed {
+    opacity: 0.7;
+    border: 2px solid $success;
+  }
+}
+
+// Button styles
+.btn-add, .btn-complete, .btn-save, .btn-cancel, .btn-delete {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  transform: translateY(0);
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.btn-add {
+  @include gradient-bg($primary-color, $secondary-color);
+  color: $bg-dark;
+}
+
+.btn-complete {
+  background: $success;
+  color: $bg-dark;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.btn-edit {
+  background: #ffa500;
+  color: $bg-dark;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  transform: translateY(0);
+  
+  &:hover {
+    transform: translateY(-2px);
+    background: #ff8c00;
+  }
+}
+.btn-save {
+  background: $success;
+  color: $bg-dark;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: $text-muted;
+  border: 2px solid $text-muted;
+  
+  &:hover {
+    color: $text-light;
+    border-color: $text-light;
+  }
+}
+
+.btn-delete {
+  background: $danger;
+  color: $text-light;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+// Add form styles
+.add-exercise-form {
+  background: $bg-card;
+  border: 2px solid rgba($primary-color, 0.3);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: none;
+  
+  &.active {
+    display: block;
+    animation: slideDown 0.3s ease;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    input {
+      background: transparent;
+      border: 2px solid rgba($secondary-color, 0.5);
+      border-radius: 8px;
+      padding: 12px 15px;
+      color: $text-light;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+      
+      &::placeholder {
+        color: $text-muted;
+      }
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+  }
+}
+
+// Edit form styles
+.edit-form {
+  background: $bg-card;
+  border: 2px solid rgba(#ffa500, 0.5);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 15px;
+  
+  .edit-form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    input {
+      background: transparent;
+      border: 2px solid rgba(#ffa500, 0.5);
+      border-radius: 8px;
+      padding: 12px 15px;
+      color: $text-light;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      
+      &:focus {
+        outline: none;
+        border-color: #ffa500;
+      }
+      
+      &::placeholder {
+        color: $text-muted;
+      }
+    }
+    
+    .edit-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .edit-form-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      
+      @media (max-width: 768px) {
+        justify-content: center;
+      }
+    }
+  }
+}
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Stats section with counter animation
+.stats-section {
+  margin-top: 40px;
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    
+    .stat-card {
+      background: $bg-card;
+      border: 2px solid rgba($primary-color, 0.3);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      
+      &:hover {
+        border-color: $primary-color;
+        transform: translateY(-3px);
+      }
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba($primary-color, 0.1), transparent);
+        transition: left 0.5s ease;
+      }
+      
+      &:hover::before {
+        left: 100%;
+      }
+      
+      .stat-label {
+        display: block;
+        color: $text-muted;
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      
+      .stat-value {
+        color: $primary-color;
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-shadow: 0 0 10px rgba($primary-color, 0.3);
+        transition: all 0.3s ease;
+        font-family: 'Courier New', monospace;
+        position: relative;
+        z-index: 1;
+        
+        &.counting {
+          animation: numberGlow 0.8s ease-out;
+        }
+      }
+      
+      &:hover .stat-value {
+        color: $success;
+        text-shadow: 0 0 15px rgba($success, 0.5);
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
+// Counter animation keyframes
+@keyframes statPulse {
+  0% {
+    transform: scale(1);
+    border-color: rgba($primary-color, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    border-color: $primary-color;
+    box-shadow: 0 0 20px rgba($primary-color, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    border-color: rgba($primary-color, 0.3);
+  }
+}
+
+@keyframes numberGlow {
+  0% {
+    text-shadow: 0 0 10px rgba($primary-color, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba($primary-color, 0.8), 0 0 30px rgba($primary-color, 0.6);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba($primary-color, 0.3);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .app {
+    padding: 15px;
+  }
+  
+  .header .title {
+    font-size: 2rem;
+  }
+  
+  .exercise-card {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+    
+    .exercise-info {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      
+      .time-input {
+        width: 100%;
+      }
+    }
+    
+    .exercise-actions {
+      justify-content: center;
+    }
+  }
+  
+  .add-exercise-form .form-group .form-actions {
+    justify-content: center;
+  }
+  
+  #runningChart {
+    width: 100%;
+    height: 150px;
+  }
+  
+  .running-chart-container .chart-legend {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .stats-section .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    
+    .stat-card .stat-value {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+// Scrollbar styling
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $bg-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $primary-color;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $secondary-color;
+}
